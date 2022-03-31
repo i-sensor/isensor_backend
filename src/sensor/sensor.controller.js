@@ -2,7 +2,8 @@ const db = require('../database/config')
 
 class SensorController {
   async sendData({ body }, res) {
-    const query = `INSERT INTO sensor_data(temperature) VALUES(${body.temperature});`
+    const { temperature, humidity, pressure, uv } = body
+    const query = `INSERT INTO sensor_data(temperature, humidity, pressure, uv) VALUES (${temperature}, ${humidity}, ${pressure}, ${uv});`
 
     try {
       await db.execute(query)
@@ -14,12 +15,12 @@ class SensorController {
   }
 
   async getData(req, res) {
-    const query = `SELECT * FROM sensor_data;`
+    const query = `SELECT temperature, humidity, pressure, uv FROM sensor_data;`
 
     try {
       const data = await db.execute(query)
 
-      res.json(data)
+      res.json(data[0])
     } catch (e) {
       res.status(404).json({ query: 'not ok' })
     }
