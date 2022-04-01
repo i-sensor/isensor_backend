@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const sensorRouter = require('./sensor/sensor.route')
 
 const app = express()
-const PORT = process.env.APP_PORT ?? 8000
+const PORT = process.env.PORT || 8000
 
 app.use(bodyParser.json())
 app.use(sensorRouter)
